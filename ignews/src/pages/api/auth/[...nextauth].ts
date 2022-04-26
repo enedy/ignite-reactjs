@@ -22,6 +22,22 @@ export default NextAuth({
         secret: process.env.JWT_SECRET,
     },
     callbacks: {
+        async session({ session }) {
+
+            try {
+                const userActiveSubscription = true;
+
+                return {
+                    ...session,
+                    activeSubscription: userActiveSubscription
+                }
+            } catch {
+                return {
+                    ...session,
+                    activeSubscription: null,
+                }
+            }
+        },
         async signIn({ user, account, profile, credentials }) {
             const { email } = user;
 
