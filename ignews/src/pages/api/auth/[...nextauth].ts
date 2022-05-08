@@ -25,7 +25,7 @@ export default NextAuth({
         async session({ session }) {
 
             try {
-                const userActiveSubscription = true;
+                const userActiveSubscription = false;
 
                 return {
                     ...session,
