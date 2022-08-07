@@ -62,7 +62,25 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
             allow_promotion_codes: true,
             success_url: process.env.STRIPE_SUCESS_URL,
             cancel_url: process.env.STRIPE_CANCEL_URL
-        })
+        });
+
+        // // SE FOR FAZER O PAGAMENTO PARA UMA CONTA ESPECIFICA (SPLIT DE PAGAMENTO)
+        // const stripeCheckoutSession = await stripe.checkout.sessions.create({
+        //     customer: customerId,
+        //     payment_method_types: ['card'],
+        //     billing_address_collection: 'required',
+        //     line_items: [{ price: priceId, quantity: 1 }],
+        //     mode, // https://stripe.com/docs/checkout/quickstart
+        //     allow_promotion_codes: true,
+        //     success_url: process.env.NEXT_STRIPE_SUCCESS_URL as string,
+        //     cancel_url: process.env.NEXT_STRIPE_CANCEL_URL as string,
+        //     payment_intent_data: {
+        //       application_fee_amount: 2, // valor que a ehdoc vai cobrar pela transacao
+        //       transfer_data: {
+        //         destination: connectedAccountId, // id da conta criada
+        //       },
+        //     },
+        //   });
 
         return response.status(200).json({ sessionId: stripeCheckoutSession.id });
     } else {
